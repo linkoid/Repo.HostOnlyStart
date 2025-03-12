@@ -10,13 +10,6 @@ namespace Linkoid.Repo.HostOnlyStart;
 [HarmonyPatch(typeof(TruckScreenText))]
 internal static class TruckScreenTextPatches
 {
-    [HarmonyPrefix, HarmonyPatch(nameof(TruckScreenText.HoldChat))]
-    private static void HoldChat_Prefix(TruckScreenText __instance)
-    {
-        // Code to execute for each PlayerController *before* Update() is called.
-        HostOnlyStart.Logger.LogDebug($"{__instance} Update Prefix");
-    }
-
     [HarmonyTranspiler, HarmonyPatch(nameof(TruckScreenText.HoldChat))]
     private static IEnumerable<CodeInstruction> HoldChat_Transpiler(IEnumerable<CodeInstruction> instructions)
     {
@@ -73,7 +66,8 @@ internal static class TruckScreenTextPatches
         HostOnlyStart.Logger.LogDebug($"!__instance.staticGrabObject.playerGrabbing.Contains(PlayerAvatar.instance.physGrabber) = {!__instance.staticGrabObject.playerGrabbing.Contains(PlayerAvatar.instance.physGrabber)}");
 
         if (hostOnlyStartLevels.Contains(RunManager.instance.levelCurrent)
-            && !__instance.staticGrabObject.playerGrabbing.Contains(PlayerAvatar.instance.physGrabber))
+            && !__instance.staticGrabObject.playerGrabbing.Contains(PlayerAvatar.instance.physGrabber)
+            && !PlayerAvatar.instance.deadSet)
             return false;
 
         return true;

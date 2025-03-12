@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Linkoid.Repo.HostOnlyStart;
 
-[BepInPlugin("Linkoid.Repo.HostOnlyStart", "Host Only Start", "1.0")]
+[BepInPlugin("Linkoid.Repo.HostOnlyStart", "Host Only Start", "1.1")]
 public class HostOnlyStart : BaseUnityPlugin
 {
     internal static HostOnlyStart Instance { get; private set; } = null!;
